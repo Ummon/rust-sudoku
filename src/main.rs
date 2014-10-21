@@ -141,7 +141,7 @@ impl Board {
    }
    
    /**
-     * Return 0 if there is some or no valid number else return the number.
+     * Returns 0 if there is some or no valid number at the given position else returns the number.
      */
    fn the_only_valid_number(&self, pos: &Pos) -> u8 {            
       let mut numbers = [false, ..10]; 
@@ -196,10 +196,12 @@ impl Board {
          }
       }
       
+      // There is eight disctinct numbers, so only one possibility remains.
       if nb == 8 {
          return get_empty_number(&numbers);
       } 
       
+      // All numbers are used, no possibility remaining..
       if nb == 9 {
          return 0;
       }
@@ -261,11 +263,16 @@ impl Board {
       0u8
    }
    
-   
+   /**
+     * Is the current state of the given position valid?
+     */
    fn is_position_valid(&self, pos: &Pos) -> bool {
       self.is_position_valid_with(pos, self.get_pos(pos))
    }
       
+   /**
+     * Is the given number can be put in the given position?
+     */
    fn is_position_valid_with(&self, pos: &Pos, n: u8) -> bool {      
       // First checks if the column of the given position is valid.      
       for i in range(0, 9) {
@@ -307,6 +314,9 @@ impl Board {
       true
    }
    
+   /**
+     * Partially solve the board by using a very simple set of constraint rules.
+     */
    fn pre_solve_with_constraints(&mut self) {
       let mut current_pos = Pos { i: 0, j: -1 };      
       let mut number_inserted = false;
